@@ -12,10 +12,8 @@ public class GameWindow extends Frame implements Runnable{
     Image background;
     Plane player1;
     Plane player2;
-    Plane player3;
-
     BufferedImage bufferedImage;
-    public GameWindow(){
+    public GameWindow(){ //constructor
         this.setSize(480, 600);
         this.setTitle("1945");
         this.setVisible(true);
@@ -54,13 +52,10 @@ public class GameWindow extends Frame implements Runnable{
             public void windowDeactivated(WindowEvent e) {
 
             }
-        });
-
-        player1 = new Plane(100, 200);
-        player3 = player1;
-        System.out.println("Da khoi tao xong");
-        player2 = new Plane();
-
+        }); // this event is just used to close the game
+        player1 = new Plane(100, 200,"Resources/PLANE1.png");
+        player2 = new Plane(200,300,"Resources/PLANE3.png");
+        // this event is used to catch motion of mouse
         this.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -72,10 +67,11 @@ public class GameWindow extends Frame implements Runnable{
                 player2.move(e.getX(), e.getY());
             }
         });
+        // this event is used to catch key from keyboard
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                //vua an phim
+
             }
 
             @Override
@@ -83,30 +79,33 @@ public class GameWindow extends Frame implements Runnable{
                 //phim duoc an va giu
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_W:
-                        player3.speedY = -3;
+                        player1.speedY = -3;
                         break;
                     case KeyEvent.VK_A:
-                        player3.speedX = -3;
+                        player1.speedX = -3;
                         break;
                     case KeyEvent.VK_S:
-                        player3.speedY = 3;
+                        player1.speedY = 3;
                         break;
                     case KeyEvent.VK_D:
-                        player3.speedX = 3;
+                        player1.speedX = 3;
                         break;
+                    case KeyEvent.VK_ENTER:
+
+
                 }
             }
             @Override
             public void keyReleased(KeyEvent e) {
                 //tha phim ra
-                player3.speedX = 0;
-                player3.speedY = 0;
+                player1.speedX = 0;
+                player1.speedY = 0;
             }
         });
 
         try {
             background = ImageIO.read(new File("Resources/Background.png"));
-            player2.image = ImageIO.read(new File("Resources/PLANE2.png"));
+            player2.image = ImageIO.read(new File("Resources/PLANE3.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
