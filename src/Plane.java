@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by hungtran on 5/29/16.
+ * Created by luuthao on 5/29/16.
  */
 
 public class Plane {
@@ -42,9 +42,6 @@ public class Plane {
         g.drawImage(this.image, this.positionX, this.positionY, null);
     }
 
-    public void shootEnemy(int x, int y) {
-        dan = new Bullet(200, 300, "Resources/DAN.png");
-        dan.
-    }
+
 
 }

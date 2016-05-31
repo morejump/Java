@@ -5,15 +5,16 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Admin on 5/30/2016.
+ * Created by luuthao on 5/29/16.
  */
-public class Bullet {
-    public int positionX, positionY;
-    public int speed = 3;
-    public BufferedImage image;
 
-    // Constructor
-    public Bullet(int positionX, int positionY, String pathImage) {
+public class Bullet {
+    public int positionX;
+    public int positionY;
+    public BufferedImage image;//Sprite
+    public int speedX;
+    public int speedY;
+    public Bullet(int positionX, int positionY, String pathImage) { // this constructor to get position and image of plane
         this.positionX = positionX;
         this.positionY = positionY;
         try {
@@ -29,10 +30,13 @@ public class Bullet {
     }
 
     public void update() {
-        this.positionY -= this.speed;
+        this.positionY -= this.speedY;
     }
 
     public void draw(Graphics g) {
         g.drawImage(this.image, this.positionX, this.positionY, null);
     }
+
+
+
 }
