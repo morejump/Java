@@ -8,16 +8,18 @@ import java.io.IOException;
 /**
  * Created by luuthao on 5/28/16.
  */
-public class GameWindow extends Frame implements Runnable{
+public class GameWindow extends Frame implements Runnable, WindowFocusListener {
     Image background;
     Plane player1;
     Plane player2;
-    Bullet dan1,dan2;
+    Bullet dan1, dan2;
     BufferedImage bufferedImage;
-    public GameWindow(){ //constructor
+
+    public GameWindow() { //constructor
         this.setSize(480, 600);
         this.setTitle("1945");
         this.setVisible(true);
+        //this.addWindowListener(new );
         this.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
@@ -54,10 +56,10 @@ public class GameWindow extends Frame implements Runnable{
 
             }
         }); // this event is just used to close the game
-        player1 = new Plane(100, 200,"Resources/PLANE2.png");
-        player2 = new Plane(200,300,"Resources/PLANE3.png");
-        dan1 = new Bullet(-200,-200,"Resources/DAN.png");
-        dan2 = new Bullet(-200,-200,"Resources/DAN.png");
+        player1 = new Plane(100, 200, "Resources/PLANE2.png");
+        player2 = new Plane(200, 300, "Resources/PLANE3.png");
+        dan1 = new Bullet(-200, -200, "Resources/DAN.png");
+        dan2 = new Bullet(-200, -200, "Resources/DAN.png");
 
         // this event is used to catch motion of mouse
         this.addMouseMotionListener(new MouseMotionListener() {
@@ -75,9 +77,10 @@ public class GameWindow extends Frame implements Runnable{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (dan2.positionY<=0){
-                    dan2 = new Bullet(player2.positionX+35, player2.positionY,"Resources/DAN.png");
-                    dan2.speedY=3;}
+                if (dan2.positionY <= 0) {
+                    dan2 = new Bullet(player2.positionX + 35, player2.positionY, "Resources/DAN.png");
+                    dan2.speedY = 3;
+                }
             }
 
             @Override
@@ -105,7 +108,7 @@ public class GameWindow extends Frame implements Runnable{
             @Override
             public void keyPressed(KeyEvent e) {
                 //phim duoc an va giu
-                switch (e.getKeyCode()){
+                switch (e.getKeyCode()) {
                     case KeyEvent.VK_W:
                         player1.speedY = -3;
                         break;
@@ -119,12 +122,14 @@ public class GameWindow extends Frame implements Runnable{
                         player1.speedX = 3;
                         break;
                     case KeyEvent.VK_SPACE:
-                        if (dan1.positionY<=0){
-                        dan1 = new Bullet(player1.positionX+30, player1.positionY,"Resources/DAN.png");
-                        dan1.speedY=3;}
+                        if (dan1.positionY <= 0) {
+                            dan1 = new Bullet(player1.positionX + 30, player1.positionY, "Resources/DAN.png");
+                            dan1.speedY = 30;
+                        }
                         break;
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
                 //tha phim ra
@@ -143,7 +148,7 @@ public class GameWindow extends Frame implements Runnable{
     }
 
 
-    public void gameUpdate(){
+    public void gameUpdate() {
         player1.update();
         player2.update();
         dan1.update();
@@ -154,7 +159,7 @@ public class GameWindow extends Frame implements Runnable{
 
     @Override
     public void update(Graphics g) {//de? ve~//hieu la ham draw
-        if(bufferedImage == null){
+        if (bufferedImage == null) {
             bufferedImage = new BufferedImage(480, 600, 1);
         }
         Graphics bufferedGraphics = bufferedImage.getGraphics();
@@ -163,12 +168,12 @@ public class GameWindow extends Frame implements Runnable{
         player2.draw(bufferedGraphics);
         dan1.draw(bufferedGraphics);
         dan2.draw(bufferedGraphics);
-        g.drawImage(bufferedImage, 0, 0,null);
+        g.drawImage(bufferedImage, 0, 0, null);
     }
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             try {
                 Thread.sleep(17);
                 gameUpdate();
@@ -178,4 +183,18 @@ public class GameWindow extends Frame implements Runnable{
             }
         }
     }
+
+    @Override
+    public void windowGainedFocus(WindowEvent e) {
+        // do somthing here
+    }
+
+    @Override
+    public void windowLostFocus(WindowEvent e) {
+
+
+        // do something here :))
+
+    }
+
 }
