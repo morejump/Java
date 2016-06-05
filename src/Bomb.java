@@ -5,17 +5,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by luuthao on 5/29/16.
+ * Created by Admin on 6/5/2016.
  */
-
-public abstract class Plane {// this class have only a ability to fly :)))
+public class Bomb {
     public int positionX;
     public int positionY;
     public BufferedImage image;//Sprite
-    public int healthPoint;
-    public int speedX;
-    public int speedY;
-    public Plane(int positionX, int positionY, String pathImage) { // this constructor to get position and image of plane
+    public int speedX=0;
+    public int speedY=3;
+    public Bomb(int positionX, int positionY, String pathImage) { // this constructor to get position and image of plane
         this.positionX = positionX;
         this.positionY = positionY;
         try {
@@ -31,13 +29,10 @@ public abstract class Plane {// this class have only a ability to fly :)))
     }
 
     public void Move() {
-        this.positionX += this.speedX;
         this.positionY += this.speedY;
     }
 
     public void draw(Graphics g) {
         g.drawImage(this.image, this.positionX, this.positionY, null);
     }
-
-    }
-
+}
