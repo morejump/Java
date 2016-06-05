@@ -128,8 +128,6 @@ public class GameWindow extends Frame implements Runnable {
     }
 
     public void gameUpdate() {
-//        count=0;
-//        Graphics g;
 
         pf01.Move();
         pf02.Move();
@@ -137,13 +135,6 @@ public class GameWindow extends Frame implements Runnable {
         bl01.Move();
         bl02.Move();
         bomb.Move();
-//        if (kc(pf01.positionX,pf01.positionY,ps.positionX,ps.positionY)<100.0f){
-//            count++;
-//            if (count==600){
-//                g.drawImage(bufferedImage,pf01.positionX,pf01.positionY,pf01.positionX+90,pf01.positionY+3,pf01.positionX,pf01.positionY,pf01.positionX+70,pf01.positionY+3,null);
-//            }
-//
-//        }
         if (bomb.positionY == y) {
             bomb = new Bomb(x, y, "Resources/fire.png");
         }
@@ -183,7 +174,8 @@ public class GameWindow extends Frame implements Runnable {
             }
 
         }
-//        g.drawImage(bufferedImage,pf01.positionX,pf01.positionY,pf01.positionX+90,pf01.positionY+3,pf01.positionX,pf01.positionY,pf01.positionX+70,pf01.positionY+3,null);
+        g.drawImage(bufferedImage,pf01.positionX,pf01.positionY,(pf01.positionX+70)+them,pf01.positionY+3,pf01.positionX,pf01.positionY,pf01.positionX+70,pf01.positionY+3,null);
+        
     }
     double getDistance(int x1, int x2, int y1, int y2){
         return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
