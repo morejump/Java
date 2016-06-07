@@ -13,11 +13,6 @@ public class GameWindow extends Frame implements Runnable {
     PlaneFighter pf01;
     PlaneFighter pf02;
     PlaneSupport ps;
-    Bullet bl01;
-    Bullet bl02;
-    HP hp01;
-    HP hp02;
-    Bomb bomb;
     int x, y,count=0, them;
     Image background;
     BufferedImage bufferedImage;
@@ -29,11 +24,6 @@ public class GameWindow extends Frame implements Runnable {
         pf01 = new PlaneFighter(100, 200, "Resources/PLANE2.png");
         pf02 = new PlaneFighter(200, 300, "Resources/PLANE3.png");
         ps = new PlaneSupport(300,300,"Resources/PlaneSupporter.png");
-        bl01 = new Bullet(-200, -300, "Resources/DAN.png");
-        bl02 = new Bullet(-200, -300, "Resources/DAN.png");
-        hp01 = new HP(pf01.positionX, pf01.positionY, "Resources/HP01.png");
-        hp02 = new HP(pf02.positionX, pf02.positionY, "Resources/HP01.png");
-        bomb = new Bomb(200, 300, "Resources/transparent.png");
         // closing game
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -53,21 +43,16 @@ public class GameWindow extends Frame implements Runnable {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (SwingUtilities.isLeftMouseButton(e)) { // shooting when left mouse button is clicked
-                    if (bl02.positionY <= 0) {
-                        bl02 = new Bullet(pf02.positionX+35, pf02.positionY, "Resources/DAN.png");
-                        pf01.Shot(bl02);
-                    }
-                }
                 if (SwingUtilities.isRightMouseButton(e)) {// Drop bomb when player click right mousse button
-                    if (bomb.positionY >= (pf02.positionY + 200) || bomb.positionY < 0) {
-                        y = pf02.positionY + 201;
-                        x = pf02.positionX;
-                        bomb = new Bomb(pf02.positionX+35, pf02.positionY, "Resources/Bomb.png");
-                    }
+                    pf02.dropBomb();
+                }
+                if (SwingUtilities.isLeftMouseButton(e)) {// shooting.....
+                    pf02.Shot();
+
                 }
             }
         });
+
         // this event is used to catch key from keyboard and move plan 1, shot
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -87,10 +72,6 @@ public class GameWindow extends Frame implements Runnable {
                         pf01.speedX = 10;
                         break;
                     case KeyEvent.VK_SPACE:
-                        if (bl01.positionY <= 0) {
-                            bl01 = new Bullet(pf01.positionX+35, pf01.positionY, "Resources/DAN.png");
-                            pf01.Shot(bl01);
-                        }
                         break;
                     case KeyEvent.VK_UP:
                         ps.speedY=-10;
@@ -128,23 +109,9 @@ public class GameWindow extends Frame implements Runnable {
     }
 
     public void gameUpdate() {
-
         pf01.Move();
         pf02.Move();
         ps.Move();
-        bl01.Move();
-        bl02.Move();
-        bomb.Move();
-        if (bomb.positionY == y) {
-            bomb = new Bomb(x, y, "Resources/fire.png");
-        }
-        if (bomb.positionY == y+6) {
-            bomb = new Bomb(x, y, "Resources/transparent.png");
-            x=0;
-            y=0;
-        }
-        hp01.getCurrentLocation(pf01.positionX, pf01.positionY);
-        hp02.getCurrentLocation(pf02.positionX, pf02.positionY);
     }
     private double kc(int x1, int y1, int x2, int y2){
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
@@ -159,23 +126,17 @@ public class GameWindow extends Frame implements Runnable {
         pf01.draw(bufferedGraphics);
         pf02.draw(bufferedGraphics);
         ps.draw(bufferedGraphics);
-        bl01.draw(bufferedGraphics);
-        bl02.draw(bufferedGraphics);
-        hp01.draw(bufferedGraphics);
-        hp02.draw(bufferedGraphics);
-        bomb.draw(bufferedGraphics);
         g.drawImage(bufferedImage, 0, 0, null);
         if (kc(pf01.positionX,pf01.positionY,ps.positionX,ps.positionY)<100.0f){
             count++;
             if (count==100){
                 count=0;
                 them+=20;
-                g.drawImage(bufferedImage,pf01.positionX,pf01.positionY,(pf01.positionX+70)+them,pf01.positionY+3,pf01.positionX,pf01.positionY,pf01.positionX+70,pf01.positionY+3,null);
             }
 
         }
         g.drawImage(bufferedImage,pf01.positionX,pf01.positionY,(pf01.positionX+70)+them,pf01.positionY+3,pf01.positionX,pf01.positionY,pf01.positionX+70,pf01.positionY+3,null);
-        
+
     }
     double getDistance(int x1, int x2, int y1, int y2){
         return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
